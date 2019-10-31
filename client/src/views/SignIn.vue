@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapActions } from "vuex";
 export default {
   name: "signin",
   data() {
@@ -27,8 +27,11 @@ export default {
     };
   },
   methods: {
-    async submit() {
-      let response = axios.post("auth/signin", this.form);
+    ...mapActions({
+      signIn: "auth/signIn"
+    }),
+    submit() {
+      this.signIn(this.form);
     }
   }
 };
