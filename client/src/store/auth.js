@@ -6,6 +6,14 @@ export default {
     token: null,
     user: null
   },
+  getters: {
+    authenticated(state) {
+      return state.token && state.user;
+    },
+    user(state) {
+      return state.user;
+    }
+  },
   mutations: {
     SET_TOKEN(state, token) {
       state.token = token;
@@ -18,7 +26,7 @@ export default {
     async signIn({ dispatch }, credentials) {
       let response = await axios.post("auth/signin", credentials);
 
-      dispatch("attempt", response.data.token);
+      return dispatch("attempt", response.data.token);
     },
     async attempt({ commit }, token) {
       commit("SET_TOKEN", token);
